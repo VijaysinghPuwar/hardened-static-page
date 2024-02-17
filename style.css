@@ -1,0 +1,119 @@
+body{
+    background-color: black;
+    position: relative;
+    color: aliceblue;
+    margin:0px;
+
+    &::before{
+        content: '';
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-image: url("https://c4.wallpaperflare.com/wallpaper/296/400/37/movie-avengers-infinity-war-black-panther-movie-black-widow-wallpaper-preview.jpg") ;
+        background-size: cover;
+        background-position: top center;
+        opacity: 0.2;
+    }
+
+}
+
+
+.background{
+    height: 100vh;
+
+}
+
+.aven{
+    position: relative;
+    margin: auto;
+    border: 10px solid rgb(255, 0, 0);
+    text-align: center;
+    
+}
+
+p{
+    display: inline-block;
+}
+
+.imge{
+    height: 10%;
+    position: relative;
+    display: flex;
+    
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    
+
+}
+
+.deep-shadow {
+    box-shadow: 10px 10px 30px rgba(189, 0, 0, 0.8); 
+
+}
+
+.deep-shadow:hover{
+    box-shadow: 10px 10px 30px rgba(189, 0, 161, 0.8); 
+
+}
+
+
+
+.aven1{
+    margin: auto;
+    position: relative;
+    margin-top: 10px;
+    border: 10px solid rgb(255, 255, 255);
+    text-align: center;
+}
+
+
+.aven1:hover{  
+    border: 20px solid rgb(13, 176, 168);
+    text-shadow: 2px 2px rgb(75, 75, 75);
+}
+
+.aven:hover{  
+    border: 20px solid lightskyblue;
+    
+}
+
+h1{
+    color: rgb(255, 0, 0);
+    font-size: 3rem;
+    font-family: "Protest Riot", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-shadow: 2px 2px rgb(255, 255, 255);
+}
+
+h1:hover{
+    text-shadow: 2px 2px rgb(47, 134, 163);
+}
+
+h2{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.ironman{
+    color: red;
+}
+
+.America{
+    color: lightskyblue;
+}
+
+.hulk{
+    color: lightseagreen;
+}
+
+p{
+    margin-left: 20px;
+    font-family: "Protest Riot", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+
+}
