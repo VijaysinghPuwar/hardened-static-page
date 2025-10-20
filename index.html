@@ -8,29 +8,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
 </head>
 <body>
-    <div class="background" >
+    <div class="background">
+        <main class="container" aria-labelledby="team-title">
+            <header class="hero">
+                <figure class="hero__artwork">
+                    <img class="hero__image" src="kcnd4012a3qnsi7scaf4p09v1g-6608dfa2f652b332e2533f12db3087d8.png" alt="Illustration of the Avengers team">
+                </figure>
+                <h1 id="team-title" class="hero__title">Avengers</h1>
+                <p class="hero__tagline">Earth&apos;s mightiest heroes united to protect the universe.</p>
+            </header>
 
-            <div class="imge">
-                <img class="deep-shadow" src="kcnd4012a3qnsi7scaf4p09v1g-6608dfa2f652b332e2533f12db3087d8.png">
-            </div>
-            
-            <div class="aven">
-                
-                <h1>Avengers</h1>
-            </div>
-
-            <div class="aven1">
-                <h2 class="ironman">Iron Man</h2>
-                <p>Also goes by the name <b class="ironman">Toney Stark</b></p>
-                <h2 class="America">Captain America</h2> 
-                <p>Also goes by the name <b class="America">Steve Rogeres</b></p>
-                <h2 class="hulk">Hulk</h2>
-                <p>Also goes by the name <b class="hulk">Bruce banner</b></p>
-            </div>
+            <section class="roster" aria-label="Avengers roster">
+                <ul class="roster__list">
+                    <li class="roster__item roster__item--ironman">
+                        <h2>Iron Man</h2>
+                        <p>Also known as <strong>Tony Stark</strong>, the genius inventor inside the armored suit.</p>
+                    </li>
+                    <li class="roster__item roster__item--america">
+                        <h2>Captain America</h2>
+                        <p>Also known as <strong>Steve Rogers</strong>, the super-soldier wielding the vibranium shield.</p>
+                    </li>
+                    <li class="roster__item roster__item--hulk">
+                        <h2>Hulk</h2>
+                        <p>Also known as <strong>Bruce Banner</strong>, the brilliant scientist with unstoppable strength.</p>
+                    </li>
+                </ul>
+            </section>
+        </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.js"></script>
 </body>
 </html>
