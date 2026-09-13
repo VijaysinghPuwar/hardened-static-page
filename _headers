@@ -1,0 +1,38 @@
+# Response headers for Cloudflare Pages / Netlify. Both read this file from
+# the site root and both use the same format: a path pattern, then indented
+# "Name: value" lines.
+#
+# Verify locally with tools/serve.py, which applies these same rules, and in
+# CI with tools/check-headers.sh against the deployed URL.
+
+/*
+  # The page has no javascript, no inline style, no forms and no frames, so
+  # everything can be denied and only the four things it does load allowed.
+  Content-Security-Policy: default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  # frame-ancestors above covers this; kept for scanners that still look for it.
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), usb=(), xr-spatial-tracking=()
+  # Two years, and the apex is submitted to the preload list.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+/
+  # Always revalidate the entry point so a deploy is picked up immediately.
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  # A week, not a year: these filenames are not content-hashed, so immutable
+  # would strand anyone on a stale build until the TTL expired. Worth
+  # revisiting if the build ever starts fingerprinting output names.
+  Cache-Control: public, max-age=604800
+
+/assets/img/og.jpg
+  # Scrapers and anyone embedding the preview need this one cross-origin.
+  Cross-Origin-Resource-Policy: cross-origin
