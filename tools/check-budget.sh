@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 
 # What a browser on a 2x screen actually pulls for a cold load of /.
 CRITICAL=(index.html style.css assets/fonts/protest-riot-latin.woff2
-          assets/img/hero-480.avif assets/img/favicon.png)
+          assets/img/mark.svg assets/img/favicon.png)
 
 BUDGET_CRITICAL=$((150 * 1024))   # cold load on a retina screen
 BUDGET_FILE=$((200 * 1024))       # no single tracked file

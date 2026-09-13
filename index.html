@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avengers</title>
-    <meta name="description" content="Earth's mightiest heroes - Iron Man, Captain America and the Hulk - on a single self-contained page.">
+    <title>Hardened</title>
+    <meta name="description" content="A static page with a deny-by-default CSP, a 150 KB weight budget, and CI that fails the build when either regresses.">
     <meta name="theme-color" content="#0b0f1c">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Avengers">
-    <meta property="og:description" content="Earth's mightiest heroes - Iron Man, Captain America and the Hulk - on a single self-contained page.">
+    <meta property="og:title" content="Hardened">
+    <meta property="og:description" content="A static page with a deny-by-default CSP, a 150 KB weight budget, and CI that fails the build when either regresses.">
     <meta property="og:image" content="assets/img/og.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="assets/img/favicon.png" sizes="32x32">
@@ -22,37 +22,27 @@
         <main class="container">
             <header class="hero">
                 <div class="hero__artwork">
-                    <picture>
-                        <source type="image/avif" sizes="240px"
-                                srcset="assets/img/hero-240.avif 240w,
-                                        assets/img/hero-480.avif 480w,
-                                        assets/img/hero-720.avif 720w">
-                        <source type="image/webp" sizes="240px"
-                                srcset="assets/img/hero-240.webp 240w,
-                                        assets/img/hero-480.webp 480w,
-                                        assets/img/hero-720.webp 720w">
-                        <img class="hero__image" src="assets/img/hero-240.png"
-                             width="240" height="275" fetchpriority="high" decoding="async"
-                             alt="Illustration of the Avengers team">
-                    </picture>
+                    <img class="hero__image" src="assets/img/mark.svg"
+                         width="200" height="224" fetchpriority="high" decoding="async"
+                         alt="">
                 </div>
-                <h1 class="hero__title">Avengers</h1>
-                <p class="hero__tagline">Earth&apos;s mightiest heroes united to protect the universe.</p>
+                <h1 class="hero__title">Hardened</h1>
+                <p class="hero__tagline">A single static page with a deny-by-default CSP, a 150&nbsp;KB weight budget, and CI that fails the build when either regresses.</p>
             </header>
 
-            <section class="roster" aria-label="Avengers roster">
+            <section class="roster" aria-label="What this page demonstrates">
                 <ul class="roster__list">
-                    <li class="roster__item roster__item--ironman">
-                        <h2>Iron Man</h2>
-                        <p>Also known as <strong>Tony Stark</strong>, the genius inventor inside the armored suit.</p>
+                    <li class="roster__item roster__item--perf">
+                        <h2>Performance</h2>
+                        <p>Lighthouse <strong>100</strong>. 34&nbsp;KB on a cold load, LCP 0.3&nbsp;s, CLS 0. A budget check caps the critical path at 150&nbsp;KB and any one file at 200&nbsp;KB.</p>
                     </li>
-                    <li class="roster__item roster__item--america">
-                        <h2>Captain America</h2>
-                        <p>Also known as <strong>Steve Rogers</strong>, the super-soldier wielding the vibranium shield.</p>
+                    <li class="roster__item roster__item--security">
+                        <h2>Security</h2>
+                        <p>No JavaScript at all, so the policy is <strong>default-src 'none'</strong> with no unsafe-inline. HSTS, COOP/COEP/CORP, and 11 header assertions on every push.</p>
                     </li>
-                    <li class="roster__item roster__item--hulk">
-                        <h2>Hulk</h2>
-                        <p>Also known as <strong>Bruce Banner</strong>, the brilliant scientist with unstoppable strength.</p>
+                    <li class="roster__item roster__item--a11y">
+                        <h2>Accessibility</h2>
+                        <p>Lighthouse <strong>100</strong>. Text contrast above 9:1, hover motion dropped under prefers-reduced-motion, semantic landmarks throughout.</p>
                     </li>
                 </ul>
             </section>

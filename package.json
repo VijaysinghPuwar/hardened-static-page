@@ -1,5 +1,5 @@
 {
-  "name": "avengers-page",
+  "name": "hardened-static-page",
   "version": "1.0.0",
   "private": true,
   "description": "Static single-page site. No runtime dependencies - the toolchain below is lint and audit only.",
