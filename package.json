@@ -1,0 +1,20 @@
+{
+  "name": "avengers-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static single-page site. No runtime dependencies - the toolchain below is lint and audit only.",
+  "scripts": {
+    "serve": "python3 tools/serve.py 8000",
+    "lint:html": "html-validate index.html 404.html",
+    "lint:css": "stylelint style.css",
+    "lint": "npm run lint:html && npm run lint:css",
+    "check:headers": "tools/check-headers.sh http://127.0.0.1:8000",
+    "check:budget": "tools/check-budget.sh",
+    "test": "npm run lint && npm run check:budget"
+  },
+  "devDependencies": {
+    "html-validate": "9.7.1",
+    "stylelint": "16.24.0",
+    "stylelint-config-standard": "39.0.1"
+  }
+}

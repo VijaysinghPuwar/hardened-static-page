@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main, rebuild]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint HTML and CSS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:html
+      - run: npm run lint:css
+
+  budget:
+    name: Page weight budget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The first version of this site shipped a 19MB png. This is the guard
+      # that stops it coming back.
+      - run: tools/check-budget.sh
+
+  headers:
+    name: Security headers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # tools/serve.py applies the same _headers rules the host will, so the
+      # policy is checked on every push rather than only after a deploy.
+      - name: Serve with production headers
+        run: |
+          python3 tools/serve.py 8000 &
+          for _ in $(seq 30); do
+            curl -sf -o /dev/null http://127.0.0.1:8000/ && break
+            sleep 0.2
+          done
+      - run: tools/check-headers.sh http://127.0.0.1:8000/
+      - name: CSP must block inline script
+        run: |
+          printf '%s\n<script>document.title="EXECUTED";</script>\n' "$(cat index.html)" > /tmp/probe.html
+          cp /tmp/probe.html ./probe.html
+          title=$(curl -s http://127.0.0.1:8000/probe.html >/dev/null; \
+                  google-chrome --headless --disable-gpu --no-sandbox \
+                    --virtual-time-budget=4000 --dump-dom \
+                    http://127.0.0.1:8000/probe.html 2>/dev/null \
+                  | grep -oP '(?<=<title>).*?(?=</title>)')
+          rm -f ./probe.html
+          echo "title was: $title"
+          if [ "$title" = "EXECUTED" ]; then
+            echo "CSP did not block inline script"; exit 1
+          fi
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g @lhci/cli@0.14.x
+      - run: lhci autorun

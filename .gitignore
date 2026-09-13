@@ -5,3 +5,4 @@ assets/src/
 node_modules/
 __pycache__/
 *.pyc
+.lighthouseci/
