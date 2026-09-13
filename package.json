@@ -15,6 +15,6 @@
   "devDependencies": {
     "html-validate": "9.7.1",
     "stylelint": "16.24.0",
-    "stylelint-config-standard": "39.0.1"
+    "stylelint-config-standard": "40.0.0"
   }
 }
