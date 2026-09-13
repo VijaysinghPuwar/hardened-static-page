@@ -65,13 +65,23 @@ jobs:
   secrets:
     name: Secret scan
     runs-on: ubuntu-latest
+    env:
+      GITLEAKS_VERSION: 8.24.3
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install gitleaks
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+      # Scan the whole history rather than the pushed range. The official
+      # action derives a range from the push event, which breaks after a
+      # history rewrite because the "before" commit is now the root and has
+      # no parent to diff against.
+      - name: Scan full history
+        run: gitleaks detect --source . --redact --verbose --exit-code 1
 
   lighthouse:
     name: Lighthouse
