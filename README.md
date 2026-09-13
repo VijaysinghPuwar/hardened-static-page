@@ -56,6 +56,29 @@ proves very little. It also injects an inline `<script>` into a copy of the
 page and fails if it executes, so the policy is tested for effect rather than
 for spelling.
 
+## Deploying
+
+The host has to be one that serves the `_headers` file, or the whole policy
+above is dead config. Cloudflare Pages and Netlify both do; GitHub Pages does
+not.
+
+On Cloudflare Pages, with no build step:
+
+| setting | value |
+|---|---|
+| Framework preset | None |
+| Build command | *(leave empty)* |
+| Build output directory | `/` |
+
+Then point CI at it so the deployed headers are verified on every push, not
+just the local ones:
+
+```sh
+gh variable set SITE_URL --body https://<project>.pages.dev
+```
+
+Until that variable is set the `live` job skips.
+
 ## How it got here
 
 This started as a fan page with a 19 MB image in it. Each number below is the

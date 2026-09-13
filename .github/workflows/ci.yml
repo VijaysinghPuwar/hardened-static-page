@@ -93,3 +93,22 @@ jobs:
           node-version: '22'
       - run: npm install -g @lhci/cli@0.14.x
       - run: lhci autorun
+
+  live:
+    name: Deployed site headers
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      # Checks the real deployment rather than tools/serve.py, so a host
+      # misconfiguration is caught too. Skips until SITE_URL is set:
+      #   gh variable set SITE_URL --body https://<project>.pages.dev
+      - name: Check headers on the deployed site
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          if [ -z "${SITE_URL}" ]; then
+            echo "SITE_URL repository variable is not set - nothing deployed yet, skipping."
+            exit 0
+          fi
+          tools/check-headers.sh "${SITE_URL}"
