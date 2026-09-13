@@ -14,7 +14,19 @@
         <main class="container" aria-labelledby="team-title">
             <header class="hero">
                 <figure class="hero__artwork">
-                    <img class="hero__image" src="kcnd4012a3qnsi7scaf4p09v1g-6608dfa2f652b332e2533f12db3087d8.png" alt="Illustration of the Avengers team">
+                    <picture>
+                        <source type="image/avif" sizes="240px"
+                                srcset="assets/img/hero-240.avif 240w,
+                                        assets/img/hero-480.avif 480w,
+                                        assets/img/hero-720.avif 720w">
+                        <source type="image/webp" sizes="240px"
+                                srcset="assets/img/hero-240.webp 240w,
+                                        assets/img/hero-480.webp 480w,
+                                        assets/img/hero-720.webp 720w">
+                        <img class="hero__image" src="assets/img/hero-240.png"
+                             width="240" height="275" fetchpriority="high" decoding="async"
+                             alt="Illustration of the Avengers team">
+                    </picture>
                 </figure>
                 <h1 id="team-title" class="hero__title">Avengers</h1>
                 <p class="hero__tagline">Earth&apos;s mightiest heroes united to protect the universe.</p>

@@ -77,8 +77,15 @@ body::after {
     justify-content: center;
 }
 
+/* Let the <img> stay the flex item so the 50% below still resolves against
+   .hero__artwork rather than the <picture> wrapper. */
+.hero__artwork picture {
+    display: contents;
+}
+
 .hero__image {
     width: clamp(180px, 50%, 240px);
+    height: auto;
     filter: drop-shadow(0 20px 40px rgba(255, 59, 59, 0.45));
     transition: transform 250ms ease, filter 250ms ease;
 }

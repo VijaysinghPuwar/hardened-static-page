@@ -1,0 +1,5 @@
+# Full-size source artwork. Regenerate assets/img with tools/build-images.sh.
+assets/src/
+
+.DS_Store
+node_modules/
