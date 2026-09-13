@@ -233,3 +233,47 @@ body::after {
         transform: none;
     }
 }
+
+/* 404 */
+.container--narrow {
+    /* .container goes two-column at 768px; the 404 has one child. */
+    grid-template-columns: 1fr;
+    max-width: min(560px, 92vw);
+    text-align: center;
+}
+
+.hero--centred {
+    text-align: center;
+    justify-items: center;
+}
+
+.hero__eyebrow {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font: inherit;
+    text-decoration: none;
+    transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.button:hover,
+.button:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.32);
+}
+
+.button:focus-visible {
+    outline: 2px solid var(--accent-america);
+    outline-offset: 3px;
+}
