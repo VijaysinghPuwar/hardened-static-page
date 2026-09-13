@@ -6,6 +6,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Actions are pinned to commit SHAs rather than tags. A tag is mutable - who
+# controls the repo can repoint v7 at anything - so a tag pin trusts the
+# action owner forever. Dependabot bumps these and the comment tracks which
+# release each SHA is.
 permissions:
   contents: read
 
@@ -14,8 +18,8 @@ jobs:
     name: Lint HTML and CSS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
           cache: npm
@@ -27,7 +31,7 @@ jobs:
     name: Page weight budget
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # The first version of this site shipped a 19MB png. This is the guard
       # that stops it coming back.
       - run: tools/check-budget.sh
@@ -36,7 +40,7 @@ jobs:
     name: Security headers
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # tools/serve.py applies the same _headers rules the host will, so the
       # policy is checked on every push rather than only after a deploy.
       - name: Serve with production headers
@@ -67,14 +71,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITLEAKS_VERSION: 8.24.3
+      GITLEAKS_SHA256: 9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - name: Install gitleaks
         run: |
-          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
-            | tar -xz -C /usr/local/bin gitleaks
+          set -euo pipefail
+          cd "$(mktemp -d)"
+          tarball="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -sSfL -o "$tarball" \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${tarball}"
+          # Pinning a version without checking the bytes is half a control -
+          # a release asset can be replaced after the fact.
+          echo "${GITLEAKS_SHA256}  ${tarball}" | sha256sum --check --strict
+          tar -xzf "$tarball" -C /usr/local/bin gitleaks
           gitleaks version
       # Scan the whole history rather than the pushed range. The official
       # action derives a range from the push event, which breaks after a
@@ -87,8 +99,8 @@ jobs:
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
       - run: npm install -g @lhci/cli@0.14.x
@@ -99,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # Checks the real deployment rather than tools/serve.py, so a host
       # misconfiguration is caught too. Skips until SITE_URL is set:
       #   gh variable set SITE_URL --body https://<project>.pages.dev

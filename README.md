@@ -120,6 +120,13 @@ assets/fonts/       self-hosted woff2 + its OFL licence
 tools/              build, serve, and the two CI check scripts
 ```
 
+## Security
+
+Reporting and the full list of enforced controls are in
+[`SECURITY.md`](SECURITY.md). In short: actions pinned to commit SHAs rather
+than tags, the gitleaks download verified by SHA-256, secrets scanned across
+full history, and the CSP tested for effect rather than for spelling.
+
 ## Licence
 
 Code and the shield mark: MIT, see `LICENSE`.
