@@ -43,4 +43,9 @@ magick "$tmp/base.png" -resize 148x148 -background none -gravity center \
   -extent 180x180 -background "#0b0f1c" -flatten -alpha off \
   -colors 256 -dither None -define png:compression-level=9 "$out/apple-touch-icon.png"
 
-magick identify -format '%f  %wx%h  %b\n' "$out"/hero-* "$out"/favicon.png "$out"/apple-touch-icon.png
+# Open Graph card. 1200x630 is what the scrapers crop to.
+magick -size 1200x630 radial-gradient:"#1d2747"-"#080b16" \
+  \( "$tmp/base.png" -resize x430 \) -gravity center -compose over -composite \
+  -quality 82 -interlace Plane -strip "$out/og.jpg"
+
+magick identify -format '%f  %wx%h  %b\n' "$out"/hero-* "$out"/favicon.png "$out"/og.jpg "$out"/apple-touch-icon.png
