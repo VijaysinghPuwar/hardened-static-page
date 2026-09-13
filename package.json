@@ -13,7 +13,7 @@
     "test": "npm run lint && npm run check:budget"
   },
   "devDependencies": {
-    "html-validate": "9.7.1",
+    "html-validate": "11.15.0",
     "stylelint": "16.24.0",
     "stylelint-config-standard": "39.0.1"
   }
