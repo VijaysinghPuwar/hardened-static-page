@@ -34,4 +34,13 @@ done
 magick "$tmp/240.png" -colors 256 -dither None \
   -define png:compression-level=9 "$out/hero-240.png"
 
-magick identify -format '%f  %wx%h  %b\n' "$out"/hero-*
+# Favicons, squared off the same art.
+magick "$tmp/base.png" -resize 32x32 -background none -gravity center \
+  -extent 32x32 -colors 256 -dither None "$out/favicon.png"
+# iOS ignores alpha on touch icons and fills it black, so flatten onto the
+# page background instead of shipping transparency it will not honour.
+magick "$tmp/base.png" -resize 148x148 -background none -gravity center \
+  -extent 180x180 -background "#0b0f1c" -flatten -alpha off \
+  -colors 256 -dither None -define png:compression-level=9 "$out/apple-touch-icon.png"
+
+magick identify -format '%f  %wx%h  %b\n' "$out"/hero-* "$out"/favicon.png "$out"/apple-touch-icon.png
